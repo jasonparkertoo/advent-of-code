@@ -1,7 +1,5 @@
 package com.adventofcode.y2024;
 
-import java.nio.file.Paths;
-
 import com.adventofcode.y2024.util.PathUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
