@@ -16,7 +16,7 @@ class Day3Tests {
     void a() {
         var expected = 161;
         var actual = example.product(ScanLevel.MUL);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -24,7 +24,7 @@ class Day3Tests {
     void b() {
         var expected = 156388521;
         var actual = answer.product(ScanLevel.MUL);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -32,7 +32,7 @@ class Day3Tests {
     void c() {
         var expected = 48;
         var actual = example2.product(ScanLevel.FULL);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -40,6 +40,6 @@ class Day3Tests {
     void d() {
         var expected = 75920122;
         var actual = answer.product(ScanLevel.FULL);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 }
