@@ -4,7 +4,7 @@ import com.adventofcode.y2024.util.PathUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class MazeTest {
+class Day6Tests {
 
     private static final String DAY = "day6";
 
