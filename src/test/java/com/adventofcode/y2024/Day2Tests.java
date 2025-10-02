@@ -15,7 +15,7 @@ public class Day2Tests {
     void A() {
         var expected = 2L;
         var actual = Analyze.numberOfSafeReports(exampleReports);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class Day2Tests {
     void B() {
         var expected = 606L;
         var actual = Analyze.numberOfSafeReports(challengeReports);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class Day2Tests {
     void C() {
         var expected = 4L;
         var actual = Analyze.numberOfTolerableReports(exampleReports);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -39,6 +39,6 @@ public class Day2Tests {
     void D() {
         var expected = 644L;
         var actual = Analyze.numberOfTolerableReports(challengeReports);
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 }
