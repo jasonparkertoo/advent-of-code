@@ -32,4 +32,26 @@ class Day8Tests {
 
         Assertions.assertEquals(expected, actual);
     }
+
+    @Test
+    void testC() throws IOException {
+        List<String> scan = Files.readAllLines(PathUtil.getExampleData(DAY));
+        var city = new City(scan);
+
+        var expected = 34;
+        var actual = city.countUniqueLocationsHarmonics();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void testD() throws IOException {
+        List<String> scan = Files.readAllLines(PathUtil.getChallengeData(DAY));
+        var city = new City(scan);
+
+        var expected = 991;
+        var actual = city.countUniqueLocationsHarmonics();
+
+        Assertions.assertEquals(expected, actual);
+    }
 }
