@@ -16,7 +16,6 @@ record Block(int id, int length) {
 }
 
 record Harddrive(String diskMap) {
-
     List<Block> blocks() {
         // Each character index -> length -> block
         final int[] fileId = { 0 }; // need mutable counter inside stream
@@ -25,11 +24,9 @@ record Harddrive(String diskMap) {
                     int len = this.diskMap.charAt(i) - '0';
                     if (len == 0)
                         return null;
-                    if (i % 2 == 0) {
-                        return new Block(fileId[0]++, len); // file
-                    } else {
-                        return new Block(-1, len); // free
-                    }
+                    return i % 2 == 0
+                            ? new Block(fileId[0]++, len)
+                            : new Block(-1, len); // free
                 })
                 .filter(Objects::nonNull)
                 .toList();
