@@ -18,7 +18,7 @@ record Block(int id, int length) {
 record Harddrive(String diskMap) {
     List<Block> blocks() {
         // Each character index -> length -> block
-        final int[] fileId = { 0 }; // need mutable counter inside stream
+        final int[] fileId = {0}; // need mutable counter inside stream
         return IntStream.range(0, this.diskMap.length())
                 .mapToObj(i -> {
                     int len = this.diskMap.charAt(i) - '0';
@@ -32,15 +32,23 @@ record Harddrive(String diskMap) {
                 .toList();
     }
 
-    long checksum() {
-        var blocks = blocks();
-        var compacted = compact(blocks);
-        return checksum(compacted);
+    enum CompactMethod {
+        NORM, LEFT
     }
 
-    private List<Block> compact(List<Block> original) {
+    long checksum(CompactMethod method) {
+        var blocks = switch (method) {
+            case LEFT -> compactLeft();
+            case NORM -> compact();
+        };
+        return checksum(blocks);
+    }
+
+    private List<Block> compact() {
+        var blocks = blocks();
+
         // Expand into sequence of IDs/-1 using streams
-        List<Integer> disk = original.stream()
+        List<Integer> disk = blocks.stream()
                 .flatMap(b -> IntStream.range(0, b.length()).mapToObj(_ -> b.id()))
                 .collect(Collectors.toCollection(ArrayList::new));
 
@@ -81,9 +89,99 @@ record Harddrive(String diskMap) {
         return result;
     }
 
+    private List<Block> compactLeft() {
+        List<Block> blocks = new ArrayList<>();
+        boolean isFile = true;
+        int fileId = 0;
+
+        // Parse disk map into blocks once
+        for (char c : this.diskMap().toCharArray()) {
+            int length = c - '0';
+            if (length > 0) {
+                blocks.add(new Block(isFile ? fileId++ : -1, length));
+            }
+            isFile = !isFile;
+        }
+
+        // Move whole files left, in reverse ID order
+        for (int moveId = fileId - 1; moveId >= 0; moveId--) {
+            // Find the file block to move
+            int fileIndex = -1;
+            Block fileBlock = null;
+            for (int i = 0; i < blocks.size(); i++) {
+                Block b = blocks.get(i);
+                if (b.id() == moveId) {
+                    fileIndex = i;
+                    fileBlock = b;
+                    break;
+                }
+            }
+            if (fileBlock == null) continue;
+
+            // Find free space before the file
+            int targetIndex = -1;
+            for (int i = 0; i < fileIndex; i++) {
+                Block b = blocks.get(i);
+                if (b.isFree() && b.length() >= fileBlock.length()) {
+                    targetIndex = i;
+                    break;
+                }
+            }
+            if (targetIndex == -1) continue;
+
+            Block freeBlock = blocks.get(targetIndex);
+
+            // Move the file block
+            List<Block> updated = new ArrayList<>();
+
+            // Copy blocks before target
+            for (int i = 0; i < targetIndex; i++) {
+                updated.add(blocks.get(i));
+            }
+
+            // Add file block in free space
+            updated.add(new Block(fileBlock.id(), fileBlock.length()));
+
+            // Handle remaining free space
+            int remaining = freeBlock.length() - fileBlock.length();
+            if (remaining > 0) {
+                updated.add(new Block(-1, remaining));
+            }
+
+            // Copy blocks between target and file (excluding both)
+            for (int i = targetIndex + 1; i < fileIndex; i++) {
+                updated.add(blocks.get(i));
+            }
+
+            // Replace file block with free space
+            updated.add(new Block(-1, fileBlock.length()));
+
+            // Copy blocks after file
+            for (int i = fileIndex + 1; i < blocks.size(); i++) {
+                updated.add(blocks.get(i));
+            }
+
+            blocks = updated;
+
+            // Merge adjacent free blocks
+            List<Block> merged = new ArrayList<>();
+            for (Block block : blocks) {
+                if (!merged.isEmpty() && merged.getLast().isFree() && block.isFree()) {
+                    Block last = merged.removeLast();
+                    merged.add(new Block(-1, last.length() + block.length()));
+                } else {
+                    merged.add(block);
+                }
+            }
+            blocks = merged;
+        }
+
+        return blocks;
+    }
+
     private long checksum(List<Block> blocks) {
         // Stream of block -> stream of (position * id), then sum
-        final int[] pos = { 0 };
+        final int[] pos = {0};
         return blocks.stream()
                 .flatMapToLong(b -> {
                     if (b.isFree()) {
