@@ -16,12 +16,11 @@ class LavaTrails {
     LavaTrails(List<String> lines) {
         this.rows = lines.size();
         this.cols = lines.getFirst().length();
-        this.grid = new int[rows][cols];
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                grid[r][c] = lines.get(r).charAt(c) - '0';
-            }
-        }
+        grid = IntStream.range(0, rows)
+            .mapToObj(r -> lines.get(r).chars()
+                .map(ch -> ch - '0')
+                .toArray())
+            .toArray(int[][]::new);
     }
 
     private int height(Point p) {
@@ -30,10 +29,10 @@ class LavaTrails {
 
     private List<Point> neighbors(Point p) {
         return Stream.of(
-                        new Point(p.r() - 1, p.c()),
-                        new Point(p.r() + 1, p.c()),
-                        new Point(p.r(), p.c() - 1),
-                        new Point(p.r(), p.c() + 1))
+                new Point(p.r() - 1, p.c()),
+                new Point(p.r() + 1, p.c()),
+                new Point(p.r(), p.c() - 1),
+                new Point(p.r(), p.c() + 1))
                 .filter(n -> n.r() >= 0 && n.c() >= 0 && n.r() < rows && n.c() < cols)
                 .toList();
     }
@@ -47,9 +46,9 @@ class LavaTrails {
         Set<Point> result = (h == 9)
                 ? Set.of(p)
                 : neighbors(p).stream()
-                .filter(n -> height(n) == h + 1)
-                .flatMap(n -> reachableNines(n).stream())
-                .collect(Collectors.toUnmodifiableSet());
+                        .filter(n -> height(n) == h + 1)
+                        .flatMap(n -> reachableNines(n).stream())
+                        .collect(Collectors.toUnmodifiableSet());
 
         memo.put(p, result);
         return result;
@@ -75,9 +74,9 @@ class LavaTrails {
         int count = (h == 9)
                 ? 1
                 : neighbors(point).stream()
-                .filter(p -> height(p) == h + 1)
-                .mapToInt(p -> countPaths(p, memo))
-                .sum();
+                        .filter(p -> height(p) == h + 1)
+                        .mapToInt(p -> countPaths(p, memo))
+                        .sum();
 
         memo.put(point, count);
         return count;
