@@ -32,4 +32,26 @@ public class Day10Tests {
 
         Assertions.assertEquals(expected, actual);
     }
+    
+    @Test
+    void testC() throws IOException {
+        var topographicMap = Files.readAllLines(PathUtil.getExampleData(DAY));
+        var lavaTrails = new LavaTrails(topographicMap);
+
+        var expected = 81;
+        var actual = lavaTrails.totalTrailheadRating();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void testD() throws IOException {
+        var topographicMap = Files.readAllLines(PathUtil.getChallengeData(DAY));
+        var lavaTrails = new LavaTrails(topographicMap);
+
+        var expected = 1657;
+        var actual = lavaTrails.totalTrailheadRating();
+
+        Assertions.assertEquals(expected, actual);
+    }
 }

@@ -65,5 +65,39 @@ class LavaTrails {
                 .sum();
     }
 
+    private int countPaths(Point point, Map<Point, Integer> memo) {
+        if (memo.containsKey(point)) {
+            return memo.get(point);
+        }
 
+        var h = height(point);
+
+        int count = 0;
+        if (h == 9) {
+            count = 1;
+        } else {
+            for (Point p : neighbors(point)) {
+                if (height(p) == h+1) {
+                    count += countPaths(p, memo);
+                }
+            }
+        }
+
+        memo.put(point, count);
+        return count;
+    }
+    
+    int totalTrailheadRating() {
+        var sum = 0;
+        for (var row = 0; row < this.rows; row++) {
+            for (var col = 0; col < this.cols; col++) {
+                var p = new Point(row, col);
+                if (height(p) == 0) {
+                    var memo = new HashMap<Point, Integer>();
+                    sum += countPaths(p, memo);
+                }
+            }
+        }
+        return sum;
+    }
 }
