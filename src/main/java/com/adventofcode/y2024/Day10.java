@@ -55,7 +55,7 @@ class LavaTrails {
         return result;
     }
 
-    public int totalTrailheadScore() {
+    int totalTrailheadScore() {
         return IntStream.range(0, rows)
                 .boxed()
                 .flatMap(r -> IntStream.range(0, cols)
@@ -64,4 +64,6 @@ class LavaTrails {
                 .mapToInt(p -> reachableNines(p).size())
                 .sum();
     }
+
+
 }
