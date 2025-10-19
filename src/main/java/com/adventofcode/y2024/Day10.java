@@ -30,10 +30,10 @@ class LavaTrails {
 
     private List<Point> neighbors(Point p) {
         return Stream.of(
-                new Point(p.r() - 1, p.c()),
-                new Point(p.r() + 1, p.c()),
-                new Point(p.r(), p.c() - 1),
-                new Point(p.r(), p.c() + 1))
+                        new Point(p.r() - 1, p.c()),
+                        new Point(p.r() + 1, p.c()),
+                        new Point(p.r(), p.c() - 1),
+                        new Point(p.r(), p.c() + 1))
                 .filter(n -> n.r() >= 0 && n.c() >= 0 && n.r() < rows && n.c() < cols)
                 .toList();
     }
@@ -47,9 +47,9 @@ class LavaTrails {
         Set<Point> result = (h == 9)
                 ? Set.of(p)
                 : neighbors(p).stream()
-                        .filter(n -> height(n) == h + 1)
-                        .flatMap(n -> reachableNines(n).stream())
-                        .collect(Collectors.toUnmodifiableSet());
+                .filter(n -> height(n) == h + 1)
+                .flatMap(n -> reachableNines(n).stream())
+                .collect(Collectors.toUnmodifiableSet());
 
         memo.put(p, result);
         return result;
@@ -72,32 +72,23 @@ class LavaTrails {
 
         var h = height(point);
 
-        int count = 0;
-        if (h == 9) {
-            count = 1;
-        } else {
-            for (Point p : neighbors(point)) {
-                if (height(p) == h+1) {
-                    count += countPaths(p, memo);
-                }
-            }
-        }
+        int count = (h == 9)
+                ? 1
+                : neighbors(point).stream()
+                .filter(p -> height(p) == h + 1)
+                .mapToInt(p -> countPaths(p, memo))
+                .sum();
 
         memo.put(point, count);
         return count;
     }
-    
+
     int totalTrailheadRating() {
-        var sum = 0;
-        for (var row = 0; row < this.rows; row++) {
-            for (var col = 0; col < this.cols; col++) {
-                var p = new Point(row, col);
-                if (height(p) == 0) {
-                    var memo = new HashMap<Point, Integer>();
-                    sum += countPaths(p, memo);
-                }
-            }
-        }
-        return sum;
+        final Map<Point, Integer> memo = new HashMap<>();
+        return IntStream.range(0, this.rows * this.cols)
+                .mapToObj(i -> new Point(i / this.cols, i % this.cols))
+                .filter(p -> height(p) == 0)
+                .mapToInt(p -> countPaths(p, memo))
+                .sum();
     }
 }
