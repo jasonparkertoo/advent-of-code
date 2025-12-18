@@ -17,7 +17,7 @@ public class Day9Tests {
 
     @Test
     void testA() throws IOException {
-        var lines = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY9));
+        var lines = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY9));
         var hd = new Harddrive(lines.getFirst());
 
         var expected = 1928;
@@ -28,7 +28,7 @@ public class Day9Tests {
 
     @Test
     void testB() throws IOException {
-        var lines = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY9));
+        var lines = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY9));
         var hd = new Harddrive(lines.getFirst());
 
         var expected = 6262891638328L;
@@ -39,7 +39,7 @@ public class Day9Tests {
 
     @Test
     void testC() throws IOException {
-        var lines = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY9));
+        var lines = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY9));
         var hd = new Harddrive(lines.getFirst());
 
         var expected = 2858;
@@ -50,7 +50,7 @@ public class Day9Tests {
 
     @Test
     void testD() throws IOException {
-        var lines = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY9));
+        var lines = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY9));
         var hd = new Harddrive(lines.getFirst());
 
         var expected = 6287317016845L;
