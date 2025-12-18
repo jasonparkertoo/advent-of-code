@@ -16,7 +16,7 @@ class Day8Tests {
 
     @Test
     void testA() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY8));
+        List<String> scan = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 14;
@@ -27,7 +27,7 @@ class Day8Tests {
 
     @Test
     void testB() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY8));
+        List<String> scan = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 276;
@@ -38,7 +38,7 @@ class Day8Tests {
 
     @Test
     void testC() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY8));
+        List<String> scan = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 34;
@@ -49,7 +49,7 @@ class Day8Tests {
 
     @Test
     void testD() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY8));
+        List<String> scan = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 991;

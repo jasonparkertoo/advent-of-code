@@ -22,11 +22,11 @@ public class Day11Tests {
     @BeforeAll
     static void init() {
         try {
-            var exampleLine = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY11)).getFirst();
+            var exampleLine = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY11)).getFirst();
             for (var stone : exampleLine.split(" ")) {
                 exampleData.add(Long.valueOf(stone));
             }
-            var challengeLine = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY11)).getFirst();
+            var challengeLine = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY11)).getFirst();
             for (var stone : challengeLine.split(" ")) {
                 challengeData.add(Long.valueOf(stone));
             }

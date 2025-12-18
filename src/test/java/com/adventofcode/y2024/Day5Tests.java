@@ -12,7 +12,7 @@ class Day5Tests {
 
     @Test
     void testA() {
-        final var queue = new PrintQueue(PathUtil.getExampleData(YEAR_2024, DAY5));
+        final var queue = new PrintQueue(PathUtil.getExampleDataPath(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 143;
@@ -22,7 +22,7 @@ class Day5Tests {
 
     @Test
     void testB() {
-        final var queue = new PrintQueue(PathUtil.getChallengeData(YEAR_2024, DAY5));
+        final var queue = new PrintQueue(PathUtil.getChallengeDataPath(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 5747;
@@ -32,7 +32,7 @@ class Day5Tests {
 
     @Test
     void testC() {
-        final var queue = new PrintQueue(PathUtil.getExampleData(YEAR_2024, DAY5));
+        final var queue = new PrintQueue(PathUtil.getExampleDataPath(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 123;
@@ -42,7 +42,7 @@ class Day5Tests {
 
     @Test
     void testD() {
-        final var queue = new PrintQueue(PathUtil.getChallengeData(YEAR_2024, DAY5));
+        final var queue = new PrintQueue(PathUtil.getChallengeDataPath(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 5502;

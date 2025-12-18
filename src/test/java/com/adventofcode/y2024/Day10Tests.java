@@ -15,7 +15,7 @@ public class Day10Tests {
 
     @Test
     void testA() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY10));
+        var topographicMap = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 36;
@@ -26,7 +26,7 @@ public class Day10Tests {
 
     @Test
     void testB() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY10));
+        var topographicMap = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 776;
@@ -37,7 +37,7 @@ public class Day10Tests {
     
     @Test
     void testC() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY10));
+        var topographicMap = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 81;
@@ -48,7 +48,7 @@ public class Day10Tests {
 
     @Test
     void testD() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY10));
+        var topographicMap = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 1657;

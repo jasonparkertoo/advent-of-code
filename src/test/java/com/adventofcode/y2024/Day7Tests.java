@@ -12,7 +12,7 @@ public class Day7Tests {
 
     @Test
     void testA() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getExampleData(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getExampleDataPath(YEAR_2024, DAY7));
 
         var expected = 3749;
         var actual = bridgeRepair.totalCalibrationResult();
@@ -22,7 +22,7 @@ public class Day7Tests {
 
     @Test
     void testB() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getChallengeData(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getChallengeDataPath(YEAR_2024, DAY7));
 
         var expected = 3598800864292L; //3749
         var actual = bridgeRepair.totalCalibrationResult();
@@ -32,7 +32,7 @@ public class Day7Tests {
 
     @Test
     void testC() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getExampleData(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getExampleDataPath(YEAR_2024, DAY7));
 
         var expected = 11387L;
         var actual = bridgeRepair.totalCalibrationResultWithConcat();
@@ -42,7 +42,7 @@ public class Day7Tests {
 
     @Test
     void testD() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getChallengeData(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getChallengeDataPath(YEAR_2024, DAY7));
 
         var expected = 340362529351427L;
         var actual = bridgeRepair.totalCalibrationResultWithConcat();

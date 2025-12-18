@@ -12,7 +12,7 @@ class Day6Tests {
 
     @Test
     void testA() {
-        var maze = Maze.generate(PathUtil.getExampleData(YEAR_2024, DAY6));
+        var maze = Maze.generate(PathUtil.getExampleDataPath(YEAR_2024, DAY6));
         var path = maze.explore();
 
         var expected = 41;
@@ -23,7 +23,7 @@ class Day6Tests {
 
     @Test
     void testB() {
-        var maze = Maze.generate(PathUtil.getChallengeData(YEAR_2024, DAY6));
+        var maze = Maze.generate(PathUtil.getChallengeDataPath(YEAR_2024, DAY6));
         var path = maze.explore();
 
         var expected = 5551;
@@ -34,7 +34,7 @@ class Day6Tests {
 
     @Test
     void testC() {
-        var maze = Maze.generate(PathUtil.getExampleData(YEAR_2024, DAY6));
+        var maze = Maze.generate(PathUtil.getExampleDataPath(YEAR_2024, DAY6));
 
         var expected = 6;
         var actual = maze.countLoopPositions();
@@ -44,7 +44,7 @@ class Day6Tests {
 
     @Test
     void testD() {
-        var maze = Maze.generate(PathUtil.getChallengeData(YEAR_2024, DAY6));
+        var maze = Maze.generate(PathUtil.getChallengeDataPath(YEAR_2024, DAY6));
 
         var expected = 1939; // 1778 to low
         var actual = maze.countLoopPositions();
