@@ -1,19 +1,22 @@
 package com.adventofcode.y2024;
 
-import com.adventofcode.y2024.util.PathUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.adventofcode.util.PathUtil;
+
+import static com.adventofcode.util.Day.DAY8;
+import static com.adventofcode.util.Year.YEAR_2024;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
 class Day8Tests {
-    private static final String DAY = "day8";
 
     @Test
     void testA() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getExampleData(DAY));
+        List<String> scan = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 14;
@@ -24,7 +27,7 @@ class Day8Tests {
 
     @Test
     void testB() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getChallengeData(DAY));
+        List<String> scan = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 276;
@@ -35,7 +38,7 @@ class Day8Tests {
 
     @Test
     void testC() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getExampleData(DAY));
+        List<String> scan = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 34;
@@ -46,7 +49,7 @@ class Day8Tests {
 
     @Test
     void testD() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getChallengeData(DAY));
+        List<String> scan = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY8));
         var city = new City(scan);
 
         var expected = 991;

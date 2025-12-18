@@ -1,16 +1,18 @@
 package com.adventofcode.y2024;
 
-import com.adventofcode.y2024.util.PathUtil;
+import static com.adventofcode.util.Day.DAY5;
+import static com.adventofcode.util.Year.YEAR_2024;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class Day5Tests {
+import com.adventofcode.util.PathUtil;
 
-    private static final String DAY = "day5";
+class Day5Tests {
 
     @Test
     void testA() {
-        final var queue = new PrintQueue(PathUtil.getExampleData(DAY));
+        final var queue = new PrintQueue(PathUtil.getExampleData(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 143;
@@ -20,7 +22,7 @@ class Day5Tests {
 
     @Test
     void testB() {
-        final var queue = new PrintQueue(PathUtil.getChallengeData(DAY));
+        final var queue = new PrintQueue(PathUtil.getChallengeData(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 5747;
@@ -30,7 +32,7 @@ class Day5Tests {
 
     @Test
     void testC() {
-        final var queue = new PrintQueue(PathUtil.getExampleData(DAY));
+        final var queue = new PrintQueue(PathUtil.getExampleData(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 123;
@@ -40,7 +42,7 @@ class Day5Tests {
 
     @Test
     void testD() {
-        final var queue = new PrintQueue(PathUtil.getChallengeData(DAY));
+        final var queue = new PrintQueue(PathUtil.getChallengeData(YEAR_2024, DAY5));
         final var data = queue.parseData();
 
         var expected = 5502;

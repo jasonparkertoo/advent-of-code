@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 
 class Day1Tests {
-    private static final Day1 example = Day1
-            .of(Path.of("src", "test", "resources", "examples", "day1"));
-    private static final Day1 challenge = Day1
-            .of(Path.of("src", "test", "resources", "challenges", "day1"));
+    private static final Day1 example = Day1.of(Path.of("src", "test", "resources", "2024", "examples", "day1"));
+    private static final Day1 challenge = Day1.of(Path.of("src", "test", "resources", "2024", "challenges", "day1"));
 
     @Test
     @DisplayName("Part one example")

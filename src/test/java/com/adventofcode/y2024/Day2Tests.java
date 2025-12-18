@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 
 public class Day2Tests {
-    private final Reports exampleReports = Reports.of(Path.of("src", "test", "resources", "examples", "day2"));
-    private final Reports challengeReports = Reports.of(Path.of("src", "test", "resources", "challenges", "day2"));
+    private final Reports exampleReports = Reports.of(Path.of("src", "test", "resources", "2024", "examples", "day2"));
+    private final Reports challengeReports = Reports.of(Path.of("src", "test", "resources", "2024", "challenges", "day2"));
 
     @Test
     @DisplayName("Part one example")

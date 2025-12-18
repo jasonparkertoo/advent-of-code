@@ -7,8 +7,8 @@ import java.nio.file.Path;
 import static com.adventofcode.y2024.SearchFunction.*;
 
 class Day4Tests {
-    final Puzzle ex = Puzzle.of(Path.of("src", "test", "resources", "examples", "day4"));
-    final Puzzle ch = Puzzle.of(Path.of("src", "test", "resources", "challenges", "day4"));
+    final Puzzle ex = Puzzle.of(Path.of("src", "test", "resources", "2024", "examples", "day4"));
+    final Puzzle ch = Puzzle.of(Path.of("src", "test", "resources", "2024", "challenges", "day4"));
 
     @Test
     @DisplayName("Part one example")

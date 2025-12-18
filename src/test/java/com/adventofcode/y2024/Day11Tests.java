@@ -1,9 +1,13 @@
 package com.adventofcode.y2024;
 
-import com.adventofcode.y2024.util.PathUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import com.adventofcode.util.PathUtil;
+
+import static com.adventofcode.util.Day.DAY11;
+import static com.adventofcode.util.Year.YEAR_2024;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,19 +16,17 @@ import java.util.List;
 
 public class Day11Tests {
 
-    private static final String DAY = "day11";
-
     private final static List<Long> exampleData = new ArrayList<>();
     private final static List<Long> challengeData = new ArrayList<>();
 
     @BeforeAll
     static void init() {
         try {
-            var exampleLine = Files.readAllLines(PathUtil.getExampleData(DAY)).getFirst();
+            var exampleLine = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY11)).getFirst();
             for (var stone : exampleLine.split(" ")) {
                 exampleData.add(Long.valueOf(stone));
             }
-            var challengeLine = Files.readAllLines(PathUtil.getChallengeData(DAY)).getFirst();
+            var challengeLine = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY11)).getFirst();
             for (var stone : challengeLine.split(" ")) {
                 challengeData.add(Long.valueOf(stone));
             }
