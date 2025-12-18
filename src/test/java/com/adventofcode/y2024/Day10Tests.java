@@ -1,19 +1,21 @@
 package com.adventofcode.y2024;
 
-import com.adventofcode.y2024.util.PathUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.adventofcode.util.PathUtil;
+
+import static com.adventofcode.util.Day.DAY10;
+import static com.adventofcode.util.Year.YEAR_2024;
 
 import java.io.IOException;
 import java.nio.file.Files;
 
 public class Day10Tests {
 
-    private static final String DAY = "day10";
-
     @Test
     void testA() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getExampleData(DAY));
+        var topographicMap = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 36;
@@ -24,7 +26,7 @@ public class Day10Tests {
 
     @Test
     void testB() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getChallengeData(DAY));
+        var topographicMap = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 776;
@@ -35,7 +37,7 @@ public class Day10Tests {
     
     @Test
     void testC() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getExampleData(DAY));
+        var topographicMap = Files.readAllLines(PathUtil.getExampleData(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 81;
@@ -46,7 +48,7 @@ public class Day10Tests {
 
     @Test
     void testD() throws IOException {
-        var topographicMap = Files.readAllLines(PathUtil.getChallengeData(DAY));
+        var topographicMap = Files.readAllLines(PathUtil.getChallengeData(YEAR_2024, DAY10));
         var lavaTrails = new LavaTrails(topographicMap);
 
         var expected = 1657;
