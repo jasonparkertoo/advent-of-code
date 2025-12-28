@@ -1,18 +1,22 @@
 package com.adventofcode.y2024;
 
-import static com.adventofcode.util.Day.DAY7;
-import static com.adventofcode.util.Year.YEAR_2024;
+import static com.adventofcode.input.DataSet.CHALLENGE;
+import static com.adventofcode.input.DataSet.EXAMPLE;
 
+import com.adventofcode.input.Data;
+import com.adventofcode.input.Day;
+import com.adventofcode.input.Year;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.adventofcode.util.PathUtil;
-
 public class Day7Tests {
+
+    private final Data exampleData = new Data(EXAMPLE, Year.YEAR_2024, Day.DAY7);
+    private final Data challengeData = new Data(CHALLENGE, Year.YEAR_2024, Day.DAY7);
 
     @Test
     void testA() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getExampleDataPath(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(exampleData);
 
         var expected = 3749;
         var actual = bridgeRepair.totalCalibrationResult();
@@ -22,7 +26,7 @@ public class Day7Tests {
 
     @Test
     void testB() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getChallengeDataPath(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(challengeData);
 
         var expected = 3598800864292L; //3749
         var actual = bridgeRepair.totalCalibrationResult();
@@ -32,7 +36,7 @@ public class Day7Tests {
 
     @Test
     void testC() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getExampleDataPath(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(exampleData);
 
         var expected = 11387L;
         var actual = bridgeRepair.totalCalibrationResultWithConcat();
@@ -42,7 +46,7 @@ public class Day7Tests {
 
     @Test
     void testD() {
-        var bridgeRepair = BridgeRepair.parseEquations(PathUtil.getChallengeDataPath(YEAR_2024, DAY7));
+        var bridgeRepair = BridgeRepair.parseEquations(challengeData);
 
         var expected = 340362529351427L;
         var actual = bridgeRepair.totalCalibrationResultWithConcat();

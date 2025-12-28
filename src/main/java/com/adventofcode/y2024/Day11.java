@@ -1,10 +1,13 @@
 package com.adventofcode.y2024;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-record Stones(List<Long> numbers) {
+import com.adventofcode.input.Data;
+
+record Stones(Data data) {
 
     int numberOfDigits(final long number, final int base) {
         var temp = number;
@@ -62,7 +65,11 @@ record Stones(List<Long> numbers) {
         return out;
     }
 
-    Long numberOfStones(final long numberOfBlinks, final List<Long> numbers) {
+    Long numberOfStones(final long numberOfBlinks) {
+        final var numbers = new ArrayList<Long>();
+        for (var stone : this.data.getLines().getFirst().split(" ")) {
+            numbers.add(Long.valueOf(stone));
+        }
         final var memo = new HashMap<List<Long>, Long>();
         return numbers.stream()
                 .mapToLong(n -> blink(n, numberOfBlinks, memo))

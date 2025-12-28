@@ -1,12 +1,11 @@
 package com.adventofcode.y2024;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import com.adventofcode.input.Data;
 
 record Maze(List<List<String>> layout) {
     static final String GUARD = "^";
@@ -26,15 +25,11 @@ record Maze(List<List<String>> layout) {
     }
 
     // Maze generation
-    static Maze generate(Path p) {
-        try (Stream<String> stream = Files.lines(p)) {
-            var layout = stream
-                    .map(l -> Arrays.stream(l.trim().split("")).toList())
-                    .toList();
-            return new Maze(layout);
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+    static Maze generate(final Data d) {
+        var layout = d.getLines().stream()
+                .map(l -> Arrays.stream(l.trim().split("")).toList())
+                .toList();
+        return new Maze(layout);
     }
 
     Position findGuard() {

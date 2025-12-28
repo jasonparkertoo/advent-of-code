@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.adventofcode.input.Data;
+
 record Point(int r, int c) {
 }
 
@@ -13,7 +15,8 @@ class LavaTrails {
     private final int rows, cols;
     private final Map<Point, Set<Point>> memo = new HashMap<>();
 
-    LavaTrails(List<String> lines) {
+    LavaTrails(final Data d) {
+        var lines = d.getLines();
         this.rows = lines.size();
         this.cols = lines.getFirst().length();
         grid = IntStream.range(0, rows)

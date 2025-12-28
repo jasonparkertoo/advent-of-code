@@ -1,4 +1,4 @@
-package com.adventofcode.util;
+package com.adventofcode.input;
 
 public enum Year {
     YEAR_2024("2024"), YEAR_2025("2025");

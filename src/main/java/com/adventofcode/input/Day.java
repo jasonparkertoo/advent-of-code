@@ -1,4 +1,4 @@
-package com.adventofcode.util;
+package com.adventofcode.input;
 
 public enum Day {
     DAY1("day1"),

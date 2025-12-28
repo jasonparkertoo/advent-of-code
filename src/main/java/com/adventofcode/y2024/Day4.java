@@ -11,6 +11,8 @@ import java.util.function.BiPredicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.adventofcode.input.Data;
+
 record Puzzle(List<List<String>> letters) {
     static Puzzle of(final Path p) {
         try (Stream<String> stream = Files.lines(p)) {
@@ -23,6 +25,10 @@ record Puzzle(List<List<String>> letters) {
         }
     }
 
+    static Puzzle of(final Data data) {
+        return new Puzzle(data.getLines().stream().map(row -> Arrays.asList(row.split(""))).toList());
+    }
+    
     Long count(String word, SearchFunction sf) {
         var letters = List.of(word.toUpperCase().split(""));
         return sf.apply(letters, this);

@@ -1,35 +1,30 @@
 package com.adventofcode.y2024;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import com.adventofcode.input.Data;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-record Equation(Long result, List<Long> numbers) {
-}
+record Equation(Long result, List<Long> numbers) {}
 
 record BridgeRepair(List<Equation> equations) {
-    static BridgeRepair parseEquations(final Path file) {
-        try (Stream<String> stream = Files.lines(file)) {
-            var eq = stream.map(l -> {
-                        long result = Long.MIN_VALUE;
-                        var numbers = new ArrayList<Long>();
-                        for (var num : l.split("\\s")) {
-                            if (num.contains(":")) {
-                                result = Long.parseLong(num.replace(":", ""));
-                            } else {
-                                numbers.add(Long.parseLong(num));
-                            }
-                        }
-                        return new Equation(result, numbers);
-                    })
-                    .toList();
-            return new BridgeRepair(eq);
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+    static BridgeRepair parseEquations(final Data d) {
+        var eq = d
+            .getLines()
+            .stream()
+            .map(l -> {
+                long result = Long.MIN_VALUE;
+                var numbers = new ArrayList<Long>();
+                for (var num : l.split("\\s")) {
+                    if (num.contains(":")) {
+                        result = Long.parseLong(num.replace(":", ""));
+                    } else {
+                        numbers.add(Long.parseLong(num));
+                    }
+                }
+                return new Equation(result, numbers);
+            })
+            .toList();
+        return new BridgeRepair(eq);
     }
 
     boolean isValid(List<Long> numbers, long target, int index, long currentValue) {
@@ -73,15 +68,15 @@ record BridgeRepair(List<Equation> equations) {
 
     long totalCalibrationResult() {
         return this.equations.stream()
-                .filter(eq -> isValid(eq.numbers(), eq.result(), 1, eq.numbers().getFirst()))
-                .mapToLong(Equation::result)
-                .sum();
+            .filter(eq -> isValid(eq.numbers(), eq.result(), 1, eq.numbers().getFirst()))
+            .mapToLong(Equation::result)
+            .sum();
     }
 
     long totalCalibrationResultWithConcat() {
         return this.equations.stream()
-                .filter(eq -> isValidWithConcat(eq.numbers(), eq.result(), 1, eq.numbers().getFirst()))
-                .mapToLong(Equation::result)
-                .sum();
+            .filter(eq -> isValidWithConcat(eq.numbers(), eq.result(), 1, eq.numbers().getFirst()))
+            .mapToLong(Equation::result)
+            .sum();
     }
 }

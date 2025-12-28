@@ -2,10 +2,12 @@ package com.adventofcode.y2025;
 
 import java.util.List;
 
-public record Day2(List<String> data) {
+import com.adventofcode.input.Data;
+
+public record Day2(Data data) {
     
     public List<Long> sumInvalidIds() {
-        var ids = this.data.getFirst().split(",");
+        var ids = this.data.getLines().getFirst().split(",");
 
         var sum = 0L;
         var sum2 = 0L;

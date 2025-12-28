@@ -1,8 +1,5 @@
 package com.adventofcode.y2024;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +9,8 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.adventofcode.input.Data;
+
 record Rule(Integer left, Integer right) {
 }
 
@@ -19,38 +18,34 @@ record SafetyManual(List<Integer> pageNumbers, List<Rule> rules) {
 }
 
 class PrintQueue {
-    final Path p;
+    final Data d;
 
-    PrintQueue(Path p) {
-        this.p = p;
+    PrintQueue(Data d) {
+        this.d = d;
     }
 
     public List<SafetyManual> parseData() {
-        try (Stream<String> stream = Files.lines(this.p)) {
-            var data = stream.toList();
+        var data = d.getLines();
 
-            final var pageNumbers = data.stream()
-                    .filter(l -> l.contains(","))
-                    .map(l -> Arrays.stream(l.split(",")).map(Integer::parseInt).toList())
-                    .toList();
+        final var pageNumbers = data.stream()
+                .filter(l -> l.contains(","))
+                .map(l -> Arrays.stream(l.split(",")).map(Integer::parseInt).toList())
+                .toList();
 
-            final var rules = data.stream()
-                    .filter(l -> l.contains("|"))
-                    .map(l -> l.split("\\|"))
-                    .map(a -> new Rule(Integer.parseInt(a[0]), Integer.parseInt(a[1])))
-                    .toList();
+        final var rules = data.stream()
+                .filter(l -> l.contains("|"))
+                .map(l -> l.split("\\|"))
+                .map(a -> new Rule(Integer.parseInt(a[0]), Integer.parseInt(a[1])))
+                .toList();
 
-            final BiPredicate<List<Integer>, Rule> matchesRule = (u, r) ->
-                    u.contains(r.left()) && u.contains(r.right());
+        final BiPredicate<List<Integer>, Rule> matchesRule = (u, r) ->
+                u.contains(r.left()) && u.contains(r.right());
 
-            return pageNumbers.stream()
-                    .map(u -> new SafetyManual(u, rules.stream()
-                            .filter(r -> matchesRule.test(u, r))
-                            .toList()))
-                    .toList();
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+        return pageNumbers.stream()
+                .map(u -> new SafetyManual(u, rules.stream()
+                        .filter(r -> matchesRule.test(u, r))
+                        .toList()))
+                .toList();
     }
 
     BiPredicate<SafetyManual, Rule> conformsToRule = (s, r) -> {

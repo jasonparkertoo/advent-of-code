@@ -9,19 +9,23 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
+import com.adventofcode.input.Data;
+
 record Block(int id, int length) {
     boolean isFree() {
         return id < 0;
     }
 }
 
-record Harddrive(String diskMap) {
+record Harddrive(Data data) {
     List<Block> blocks() {
+        var diskMap = this.data.getLines().getFirst();
+        
         // Each character index -> length -> block
         final int[] fileId = {0}; // need mutable counter inside stream
-        return IntStream.range(0, this.diskMap.length())
+        return IntStream.range(0, diskMap.length())
                 .mapToObj(i -> {
-                    int len = this.diskMap.charAt(i) - '0';
+                    int len = diskMap.charAt(i) - '0';
                     if (len == 0)
                         return null;
                     return i % 2 == 0
@@ -90,12 +94,14 @@ record Harddrive(String diskMap) {
     }
 
     private List<Block> compactLeft() {
+        var diskMap = this.data.getLines().getFirst();
+        
         List<Block> blocks = new ArrayList<>();
         boolean isFile = true;
         int fileId = 0;
 
         // Parse disk map into blocks once
-        for (char c : this.diskMap().toCharArray()) {
+        for (char c : diskMap.toCharArray()) {
             int length = c - '0';
             if (length > 0) {
                 blocks.add(new Block(isFile ? fileId++ : -1, length));

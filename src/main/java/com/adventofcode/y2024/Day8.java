@@ -5,17 +5,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.adventofcode.input.Data;
+
 record Pos(int x, int y) {
 }
 
 record Antenna(char freq, Pos pos) {
 }
 
-record City(List<String> scan) {
+record City(Data data) {
 
-    // --------------------
-    // Public API
-    // --------------------
     int countUniqueLocations() {
         return countAntinodes(this::antinodesPart1);
     }
@@ -24,12 +23,9 @@ record City(List<String> scan) {
         return countAntinodes(this::antinodesPart2);
     }
 
-    // --------------------
-    // Core shared logic
-    // --------------------
     private int countAntinodes(AntinodeStrategy strategy) {
-        int height = scan.size();
-        int width = scan.getFirst().length();
+        int height = data.getLines().size();
+        int width = data.getLines().getFirst().length();
 
         List<Antenna> antennas = parseAntennas();
         Map<Character, List<Antenna>> byFreq = antennas.stream()
@@ -50,23 +46,20 @@ record City(List<String> scan) {
     }
 
     private List<Antenna> parseAntennas() {
-        int height = scan.size();
-        int width = scan.getFirst().length();
+        int height = data.getLines().size();
+        int width = data.getLines().getFirst().length();
 
         return IntStream.range(0, height)
                 .boxed()
                 .flatMap(y -> IntStream.range(0, width)
                         .mapToObj(x -> {
-                            char c = scan.get(y).charAt(x);
+                            char c = data.getLines().get(y).charAt(x);
                             return c != '.' ? new Antenna(c, new Pos(x, y)) : null;
                         }))
                 .filter(Objects::nonNull)
                 .toList();
     }
 
-    // --------------------
-    // Strategies
-    // --------------------
     private Set<Pos> antinodesPart1(Pos a, Pos b, int width, int height) {
         int dx = b.x() - a.x();
         int dy = b.y() - a.y();
@@ -122,8 +115,7 @@ record City(List<String> scan) {
         }
         return Math.abs(a);
     }
-
-    // Strategy functional interface
+    
     @FunctionalInterface
     private interface AntinodeStrategy {
         Set<Pos> generate(Pos a, Pos b, int width, int height);

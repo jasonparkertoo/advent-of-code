@@ -1,46 +1,26 @@
 package com.adventofcode.y2024;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.adventofcode.util.PathUtil;
+import com.adventofcode.input.Data;
 
-import static com.adventofcode.util.Day.DAY11;
-import static com.adventofcode.util.Year.YEAR_2024;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
+import static com.adventofcode.input.DataSet.CHALLENGE;
+import static com.adventofcode.input.DataSet.EXAMPLE;
+import static com.adventofcode.input.Day.DAY11;
+import static com.adventofcode.input.Year.YEAR_2024;
 
 public class Day11Tests {
 
-    private final static List<Long> exampleData = new ArrayList<>();
-    private final static List<Long> challengeData = new ArrayList<>();
-
-    @BeforeAll
-    static void init() {
-        try {
-            var exampleLine = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY11)).getFirst();
-            for (var stone : exampleLine.split(" ")) {
-                exampleData.add(Long.valueOf(stone));
-            }
-            var challengeLine = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY11)).getFirst();
-            for (var stone : challengeLine.split(" ")) {
-                challengeData.add(Long.valueOf(stone));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private static final Data exampleData = new Data(EXAMPLE, YEAR_2024, DAY11);
+    private static final Data challengeData = new Data(CHALLENGE, YEAR_2024, DAY11);
 
     @Test
     void TestA() {
         var stones = new Stones(exampleData);
 
         var expected = 55312;
-        var actual = stones.numberOfStones(25, exampleData);
+        var actual = stones.numberOfStones(25);
 
         Assertions.assertEquals(expected, actual);
     }
@@ -50,7 +30,7 @@ public class Day11Tests {
         var stones = new Stones(challengeData);
 
         var expected = 202019;
-        var actual = stones.numberOfStones(25, challengeData);
+        var actual = stones.numberOfStones(25);
 
         Assertions.assertEquals(expected, actual);
     }
@@ -60,7 +40,7 @@ public class Day11Tests {
         var stones = new Stones(challengeData);
 
         var expected = 239321955280205L;
-        var actual = stones.numberOfStones(75, challengeData);
+        var actual = stones.numberOfStones(75);
 
         Assertions.assertEquals(expected, actual);
     }

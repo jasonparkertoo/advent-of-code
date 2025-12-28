@@ -3,21 +3,23 @@ package com.adventofcode.y2024;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.adventofcode.util.PathUtil;
+import com.adventofcode.input.Data;
+import com.adventofcode.input.Day;
+import com.adventofcode.input.Year;
 
-import static com.adventofcode.util.Day.DAY8;
-import static com.adventofcode.util.Year.YEAR_2024;
+import static com.adventofcode.input.DataSet.CHALLENGE;
+import static com.adventofcode.input.DataSet.EXAMPLE;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.List;
 
 class Day8Tests {
 
+    private final Data exampleData = new Data(EXAMPLE, Year.YEAR_2024, Day.DAY8);
+    private final Data challengeData = new Data(CHALLENGE, Year.YEAR_2024, Day.DAY8);
+    
     @Test
     void testA() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY8));
-        var city = new City(scan);
+        var city = new City(exampleData);
 
         var expected = 14;
         var actual = city.countUniqueLocations();
@@ -27,8 +29,7 @@ class Day8Tests {
 
     @Test
     void testB() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY8));
-        var city = new City(scan);
+        var city = new City(challengeData);
 
         var expected = 276;
         var actual = city.countUniqueLocations();
@@ -38,8 +39,7 @@ class Day8Tests {
 
     @Test
     void testC() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getExampleDataPath(YEAR_2024, DAY8));
-        var city = new City(scan);
+        var city = new City(exampleData);
 
         var expected = 34;
         var actual = city.countUniqueLocationsHarmonics();
@@ -49,8 +49,7 @@ class Day8Tests {
 
     @Test
     void testD() throws IOException {
-        List<String> scan = Files.readAllLines(PathUtil.getChallengeDataPath(YEAR_2024, DAY8));
-        var city = new City(scan);
+        var city = new City(challengeData);
 
         var expected = 991;
         var actual = city.countUniqueLocationsHarmonics();

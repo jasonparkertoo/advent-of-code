@@ -1,14 +1,13 @@
 package com.adventofcode.y2024;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import com.adventofcode.input.Data;
 
 import static java.lang.Integer.parseInt;
 
@@ -87,17 +86,9 @@ enum ScanLevel {
     FULL, MUL
 }
 
-record Memory(List<String> sections) {
+record Memory(Data d) {
     private static final String START_TOKEN = "do()";
     private static final String STOP_TOKEN = "don't()";
-
-    static Memory from(final Path p) {
-        try (Stream<String> s = Files.lines(p)) {
-            return new Memory(s.toList());
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
 
     private Integer processMultiplyInstruction(String instruction) {
         final var INSTRUCTION_PREFIX_REGEX = "mul\\(";
@@ -110,7 +101,7 @@ record Memory(List<String> sections) {
 
     int product(ScanLevel level) {
         final var instPattern = Pattern.compile("mul\\([0-9]{1,3},[0-9]{1,3}\\)|don't\\(\\)|do\\(\\)");
-        final var instructions = this.sections().stream()
+        final var instructions = this.d.getLines().stream()
                 .flatMap(s -> instPattern.matcher(s).results()).map(MatchResult::group)
                 .toList();
 
