@@ -16,7 +16,7 @@ public class Day1Tests {
     private static final Data challengeData = new Data(CHALLENGE, YEAR_2025, DAY1);
     
 	@Test
-	void TestA() {
+	void testA() {
 	    var day1 = new Day1(exampleData);
 		var results = day1.solve();
 		var expected = 3;			
@@ -26,7 +26,7 @@ public class Day1Tests {
 	}
 
 	@Test
-	void TestB() {
+	void testB() {
 	    var day1 = new Day1(challengeData);
 		var results = day1.solve();
 		
@@ -37,7 +37,7 @@ public class Day1Tests {
 	}
 
 	@Test
-	void TestC() {
+	void testC() {
 	    var day1 = new Day1(exampleData);
 		var results = day1.solve();
 		
@@ -48,7 +48,7 @@ public class Day1Tests {
 	}
 	
 	@Test
-	void TestD() {
+	void testD() {
 	    var day1 = new Day1(challengeData);
 		var results = day1.solve();
 		

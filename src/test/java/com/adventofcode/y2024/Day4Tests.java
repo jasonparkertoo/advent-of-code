@@ -15,7 +15,7 @@ class Day4Tests {
     private final Data challengeData = new Data(CHALLENGE, Year.YEAR_2024, Day.DAY4);
     
     @Test
-    void a() {
+    void testA() {
         final Puzzle ex = Puzzle.of(exampleData);
         
         var expected = 18;
@@ -29,7 +29,7 @@ class Day4Tests {
     }
 
     @Test
-    void b() {
+    void testB() {
         final Puzzle ch = Puzzle.of(challengeData);
         
         var expected = 2504;
@@ -43,7 +43,7 @@ class Day4Tests {
     }
 
     @Test
-    void c() {
+    void testC() {
         final Puzzle ex = Puzzle.of(exampleData);
         
         var expected = 9;
@@ -52,7 +52,7 @@ class Day4Tests {
     }
 
     @Test
-    void d() {
+    void testD() {
         final Puzzle ch = Puzzle.of(challengeData);
         
         var expected = 1923; // 1879 low, 19180 high, 1923

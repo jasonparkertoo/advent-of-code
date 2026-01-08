@@ -16,7 +16,7 @@ public class Day11Tests {
     private static final Data challengeData = new Data(CHALLENGE, YEAR_2024, DAY11);
 
     @Test
-    void TestA() {
+    void testA() {
         var stones = new Stones(exampleData);
 
         var expected = 55312;
@@ -26,7 +26,7 @@ public class Day11Tests {
     }
 
     @Test
-    void TestB() {
+    void testB() {
         var stones = new Stones(challengeData);
 
         var expected = 202019;
@@ -36,7 +36,7 @@ public class Day11Tests {
     }
 
     @Test
-    void TestC() {
+    void testC() {
         var stones = new Stones(challengeData);
 
         var expected = 239321955280205L;
