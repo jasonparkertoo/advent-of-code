@@ -52,6 +52,14 @@ public class Data {
         return this.data.getFirst();
     }
     
+    public List<List<String>> asGrid() {
+        final Function<List<String>, List<List<String>>> dataTransformer = data ->
+            data.stream()
+                .map(r -> r.chars().mapToObj(c -> String.valueOf((char)c)).toList())
+                .toList();
+        return this.transform(dataTransformer);
+    }
+    
     public <T> T transform(Function<List<String>, T> fn) {
         return fn.apply(this.data);
     }
