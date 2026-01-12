@@ -1,86 +1,170 @@
 package com.adventofcode.y2025;
 
 import com.adventofcode.input.Data;
-
+import java.util.HashMap;
 import java.util.List;
-import java.util.Stack;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
+/**
+ * Advent of Code 2025 – Day 7 solution.
+ *
+ * <p>The puzzle deals with a grid of cells that can contain either a
+ * splitter (&#96;^&#96;) or a normal cell. A beam starts at the position marked
+ * by &#96;S&#96; and moves downwards one row per step. When it encounters a
+ * splitter, the beam splits into two beams travelling to the left and right
+ * neighbouring columns. All other cells simply propagate the existing beam(s)
+ * straight down.
+ *
+ * <p>This class provides two main calculations:
+ * <ul>
+ *   <li>{@link #countTimelines()} – counts the total number of distinct
+ *       timelines (i.e. beams) that reach the bottom row.</li>
+ *   <li>{@link #countBeamSplits()} – counts how many times a beam splits
+ *       during its traversal.</li>
+ * </ul>
+ */
 record Day7(Data d) {
+    /** Symbol used to identify the start position in the input grid. */
     private static final String START_CHARACTER = "S";
+
+    /** Symbol that represents a splitter which splits a beam into two. */
     private static final String SPLITTER_CHARACTER = "^";
-    
-    private record Pos(int row, int column) {}
-    
-    private Pos findStart(final List<List<String>> grid) {
-        for (var row = 0; row < grid.size(); row++) {
-            for (var col = 0; col < grid.get(row).size(); col++) {
-                var cell = grid.get(row).get(col);
-                if (START_CHARACTER.equals(cell)) {
-                    return new Pos(row, col);
+
+    /**
+     * Propagates the current beam counts to the next row.
+     *
+     * @param current mapping of column index → number of beams in that column
+     * @param row list of cell symbols for the target row
+     * @return a new map containing the updated beam counts for the next row
+     */
+    Map<Integer, Long> propagateCounts(final Map<Integer, Long> current, final List<String> row) {
+        Map<Integer, Long> result = new HashMap<>();
+        for (Map.Entry<Integer, Long> entry : current.entrySet()) {
+            int col = entry.getKey();
+            long val = entry.getValue();
+            if (col < 0 || col >= row.size()) continue;
+            String cell = row.get(col);
+            if (cell.equals(SPLITTER_CHARACTER)) {
+                for (int c : new int[] { col - 1, col + 1 }) {
+                    if (c >= 0 && c < row.size()) {
+                        result.merge(c, val, Long::sum);
+                    }
                 }
+            } else {
+                result.merge(col, val, Long::sum);
             }
         }
-        return new Pos(-1, -1);
+        return result;
     }
 
-    private boolean inBounds(final List<List<String>> grid, final Pos pos) {
-        if (pos.row() < 0 || pos.row() >= grid.size()) {
-            return true;
+    /** Internal record representing the result of {@link #propagateSplits}. */
+    private record Splits(Map<Integer, Integer> next, Integer counts) {}
+
+    /**
+     * Propagates beams for a row that may contain splitters.
+     *
+     * @param current mapping of column index → number of beams in that column
+     * @param row list of cell symbols for the target row
+     * @return {@link Splits} containing the new beam distribution and the
+     *         number of splits that occurred in this row
+     */
+    Splits propagateSplits(Map<Integer, Integer> current, List<String> row) {
+        int[] splitCounter = { 0 };
+        Map<Integer, Integer> next = new HashMap<>();
+        int size = row.size();
+        for (Map.Entry<Integer, Integer> entry : current.entrySet()) {
+            int col = entry.getKey();
+            if (col < 0 || col >= size) continue;
+            int val = entry.getValue();
+            String cell = row.get(col);
+            if (cell.equals(SPLITTER_CHARACTER)) {
+                splitCounter[0]++;
+                for (int c : new int[] { col - 1, col + 1 }) {
+                    if (c >= 0 && c < size) {
+                        next.merge(c, val, Integer::sum);
+                    }
+                }
+            } else {
+                next.merge(col, val, Integer::sum);
+            }
         }
-        if (pos.column() < 0 || pos.column() >= grid.get(pos.row).size()) {
-            return true;
-        }
-        return false;
+        return new Splits(next, splitCounter[0]);
     }
 
-    private List<Pos> neighbors(final List<List<String>> grid, final Pos pos) {
-        if (inBounds(grid, pos)) {
-            return List.of();
-        }
-        var cell = grid.get(pos.row()).get(pos.column());
-        if (SPLITTER_CHARACTER.equals(cell)) {
-            Pos leftNeighbor = new Pos(pos.row() + 1, pos.column() - 1);
-            Pos rightNeighbor = new Pos(pos.row() + 1, pos.column() + 1);
-            return List.of(leftNeighbor, rightNeighbor);
-        }
-        return List.of(new Pos(pos.row()+1, pos.column()));
-    }
-    
-    private int countFromStart(final List<List<String>> grid, final Pos start) {
-        var stack = new Stack<Pos>();
-        stack.push(start);
-        var visited = new Stack<Pos>();
-        var splitCount = 0;
-        
-        while (!stack.isEmpty()) {
-            var p = stack.pop();
-            
-            if (inBounds(grid, p) || visited.contains(p)) {
-                continue;
-            }
-            visited.push(p);
-            
-            var cell = grid.get(p.row()).get(p.column());
-            if (SPLITTER_CHARACTER.equals(cell)) {
-                splitCount++;
-            }
-            
-            for (var pos : neighbors(grid, p)) {
-                stack.push(pos);
-            }
-        }
-        
-        return splitCount;
-    }
-    
-    int countBeamSplits() {
+    /**
+     * Counts how many distinct timelines (beams) reach the bottom of the grid.
+     * The start position is taken from the input and a single beam originates
+     * there. Subsequent rows are processed until no beams remain or the last
+     * row has been reached.
+     *
+     * @return total number of beams that reach the final row
+     */
+    long countTimelines() {
         var grid = this.d.asGrid();
-        
-        var startPos = this.findStart(grid);
-        if (startPos.row() == -1 && startPos.column() == -1) {
-            return 0;
+        var start = findStart(grid).orElseThrow();
+        Map<Integer, Long> current = new HashMap<>() {
+            {
+                put(start.column(), 1L);
+            }
+        };
+
+        for (var rowIndex = start.row() + 1; rowIndex < grid.size() && !current.isEmpty(); rowIndex++) {
+            current = propagateCounts(current, grid.get(rowIndex));
         }
-        
-        return countFromStart(grid, startPos);
+
+        return current.values().stream().mapToLong(Long::longValue).sum();
+    }
+
+    /** Simple record representing a coordinate in the grid. */
+    private record Position(int row, int column) {}
+
+    /**
+     * Finds the start position marked by {@value #START_CHARACTER}.
+     *
+     * @param grid 2‑D list of cell symbols
+     * @return an {@link Optional} containing the first matching position or
+     *         empty if none is found
+     */
+    Optional<Position> findStart(List<List<String>> grid) {
+        return IntStream.range(0, grid.size())
+            .filter(row -> grid.get(row).contains(START_CHARACTER))
+            .mapToObj(row -> {
+                int col = grid.get(row).indexOf(START_CHARACTER);
+                return new Position(row, col);
+            })
+            .findFirst();
+    }
+
+    /**
+     * Counts how many times beams split during traversal of the grid.
+     * A new beam is spawned for each splitter encountered. The method
+     * aggregates all splits across all rows.
+     *
+     * @return total number of split events that occurred while propagating beams
+     */
+    int countBeamSplits() {
+        List<List<String>> grid = this.d.asGrid();
+        Position startPosition = this.findStart(grid).orElseThrow();
+
+        Map<Integer, Integer> current = new HashMap<>() {
+            {
+                put(startPosition.column(), 1);
+            }
+        };
+
+        int[] total = { 0 };
+        Map<Integer, Integer> curr = new HashMap<>(current);
+        IntStream.range(startPosition.row() + 1, grid.size()).forEach(row -> {
+            if (!curr.isEmpty()) {
+                Splits splits = propagateSplits(curr, grid.get(row));
+                total[0] += splits.counts();
+                curr.clear();
+                curr.putAll(splits.next());
+            }
+        });
+
+        return total[0];
     }
 }

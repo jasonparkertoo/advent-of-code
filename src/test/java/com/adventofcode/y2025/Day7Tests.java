@@ -23,4 +23,14 @@ class Day7Tests {
     void testB() {
         assertEquals(1533, challenge.countBeamSplits());
     }
+
+    @Test
+    void testC() {
+        assertEquals(40, example.countTimelines());
+    }
+
+    @Test
+    void testD() {
+        assertEquals(10733529153890L, challenge.countTimelines());
+    }
 }
