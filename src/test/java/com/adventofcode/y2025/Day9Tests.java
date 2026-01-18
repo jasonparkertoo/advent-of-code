@@ -23,5 +23,15 @@ class Day9Tests {
     @Test
     void TestB() {
         assertEquals(4756718172L, challenge.findLargestRectangle());
+    }    
+    
+    @Test
+    void TestC() {
+        assertEquals(24L, example.findLargestRectangleOfAny());
+    }
+    
+    @Test
+    void TestD() {
+        assertEquals(1665679194L, challenge.findLargestRectangleOfAny());
     }
 }
